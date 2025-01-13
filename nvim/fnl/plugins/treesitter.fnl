@@ -1,60 +1,61 @@
-(local {: autoload} (require :nfnl.module))
-(local treesitter (autoload :nvim-treesitter.configs))
-
 (fn config []
-  (treesitter.setup {:ensure_installed [:bash
-                                        :clojure
-                                        :comment
-                                        :css
-                                        :diff
-                                        :dockerfile
-                                        :dot
-                                        :fennel
-                                        :git_rebase
-                                        :gitattributes
-                                        :gitcommit
-                                        :gitignore
-                                        :graphql
-                                        :html
-                                        :java
-                                        :javascript
-                                        :jsdoc
-                                        :json
-                                        :json5
-                                        :jsonc
-                                        :lua
-                                        :make
-                                        :markdown
-                                        :markdown_inline
-                                        :mermaid
-                                        :nix
-                                        :org
-                                        :python
-                                        :query
-                                        :regex
-                                        :ruby
-                                        :scss
-                                        :slint
-                                        :sql
-                                        :typescript
-                                        :vim
-                                        :yaml]
+  (let [{: setup} (require :nvim-treesitter.configs)]
+    (setup {:ensure_installed [:clojure
+                               :comment
+                               :css
+                               :diff
+                               :dockerfile
+                               :fennel
+                               :git_rebase
+                               :gitattributes
+                               :gitcommit
+                               :gitignore
+                               :html
+                               :http
+                               :java
+                               :javascript
+                               :jsdoc
+                               :json
+                               :json5
+                               :jsonc
+                               :lua
+                               :luadoc
+                               :luap
+                               :make
+                               :markdown
+                               :markdown_inline
+                               :org
+                               :python
+                               :query
+                               :regex
+                               :ruby
+                               :scss
+                               :slint
+                               :sql
+                               :typescript
+                               :vim
+                               :yaml]
 
-                     :highlight {:enable true}
+            :auto_install true
 
-                     :incremental_selection
-                     {:enable true
-                      :keymaps {:init_selection "<LocalLeader>vv"
-                                :node_decremental "<LocalLeader>vr"
-                                :node_incremental "<LocalLeader>vm"
-                                :scope_incremental "<LocalLeader>vM"}}
+            :highlight
+            {:enable true
+             :additional_vim_regex_highlighting [:clojure
+                                                 :fennel
+                                                 :janet
+                                                 :racket]}
 
-                     :indent {:enable true}})
+            :incremental_selection
+            {:enable true
+             :keymaps {:init_selection "<LocalLeader>vv"
+                       :node_decremental "<LocalLeader>vr"
+                       :node_incremental "<LocalLeader>vm"
+                       :scope_incremental "<LocalLeader>vM"}}
+
+            :indent {:enable true}})
 
   (set vim.o.foldmethod :expr)
   (set vim.o.foldexpr "nvim_treesitter#foldexpr()")
-  (set vim.o.foldenable false))
+  (set vim.o.foldenable false)))
 
-{1 :nvim-treesitter/nvim-treesitter
- :build ::TSUpdate
- :config true}
+{: config}

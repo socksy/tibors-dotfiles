@@ -1,19 +1,9 @@
-(local {: autoload} (require :nfnl.module))
-(local clojure (autoload :lsp.clojure))
-(local cmp-lsp (autoload :cmp_nvim_lsp))
-(local fennel (autoload :lsp.fennel))
-(local tsserver (autoload :lsp.tsserver))
-(local {: on-attach} (autoload :lsp.shared))
-(local ui (autoload :config.ui))
-
-(local capabilities
-  (cmp-lsp.default_capabilities))
-
 (local handlers
-  {:textDocument/hover
-   (vim.lsp.with vim.lsp.handlers.hover {:border ui.border})
-   :textDocument/signatureHelp
-   (vim.lsp.with vim.lsp.handlers.signatureHelp {:border ui.border})})
+  (let [{: border} (require :config.ui)]
+    {:textDocument/hover
+     (vim.lsp.with vim.lsp.handlers.hover {:border border})
+     :textDocument/signatureHelp
+     (vim.lsp.with vim.lsp.handlers.signatureHelp {:border border})}))
 
 (fn update-colorscheme []
   (vim.api.nvim_set_hl 0 :LspReferenceText {:link :Visual})
@@ -26,13 +16,19 @@
                                                :group g
                                                :pattern "*"}))
   (update-colorscheme)
-  (let [opts {: capabilities
+
+  (let [{: on-attach} (require :lsp.shared)
+        clojure (require :lsp.clojure)
+        fennel (require :lsp.fennel)
+        go (require :lsp.go)
+        ts (require :lsp.ts)
+        {:default_capabilities default-capabilities} (require :cmp_nvim_lsp)
+        opts {:capabilities (default-capabilities)
               : handlers
               :on_attach on-attach}]
     (fennel.setup opts)
+    (go.setup opts)
     (clojure.setup opts)
-    (tsserver.setup opts)))
+    (ts.setup opts)))
 
-{1 :neovim/nvim-lspconfig
- : config
- :dependencies [:hrsh7th/cmp-nvim-lsp]}
+{: config}
