@@ -4,7 +4,7 @@
   (set vim.g.mapleader " ")
   (set vim.g.maplocalleader ",")
 
-  (set vim.o.colorcolumn "80")
+  ;(set vim.o.colorcolumn "80")
   (set vim.o.completeopt "menu,menuone,noselect")
   (set vim.o.conceallevel 2)
   (set vim.o.cursorline true)
@@ -28,7 +28,7 @@
   (set vim.o.updatetime 500)
   (set vim.o.visualbell true)
 
-  (set vim.g.python3_host_prog "/usr/local/opt/python/libexec/bin/python")
+  ;(set vim.g.python3_host_prog "/usr/local/opt/python/libexec/bin/python")
   (set vim.g.loaded_perl_provider 0)
 
   (when (vim.fn.executable "rg")
