@@ -22,17 +22,17 @@ end
 
 local function init ()
   local rig_plugin_dir
-  local rig_plugin_dev_dir = vim.fs.normalize('~/src/rig.nvim')
-
-  if vim.loop.fs_stat(rig_plugin_dev_dir) then
-    rig_plugin_dir = rig_plugin_dev_dir
-  else
+  --local rig_plugin_dev_dir = vim.fs.normalize('~/src/rig.nvim')
+  --
+  --if vim.loop.fs_stat(rig_plugin_dev_dir) then
+  --  rig_plugin_dir = rig_plugin_dev_dir
+  --else
     rig_plugin_dir = vim.fn.stdpath('data') .. '/lazy/rig.nvim'
     if not vim.loop.fs_stat(rig_plugin_dir) then
       fetch('codebeige/rig.nvim', rig_plugin_dir)
       dofile(rig_plugin_dir .. "/build.lua")
     end
-  end
+  --end
   vim.opt.rtp:prepend(rig_plugin_dir)
 
   require('rig').setup()
